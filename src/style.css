@@ -1,0 +1,15 @@
+.search {
+  display: inline-flex;
+  margin-top: 50px;
+  margin-right: 100px;
+  padding: 10px;
+  width: 360px;
+  height: 60px;
+  font-size: 21px;
+  align-items: baseline;
+}
+
+.input {
+  display: flex;
+  align-items: baseline;
+}
