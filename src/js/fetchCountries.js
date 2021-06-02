@@ -1,38 +1,47 @@
 import cantriesCardTempl from "../templates/cantries-card.hbs";
-import cantriesSearch from "../templates/search-cantries.hbs"
+import cantriesSearch from "../templates/search-cantries.hbs";
+import { error } from "@pnotify/core";
+import "@pnotify/core/dist/PNotify.css";
+import "@pnotify/core/dist/BrightTheme.css";
+import "@pnotify/confirm/dist/PNotifyConfirm.css";
+import API from './api-service'
+function prompt(){
+  error({
+  text: "Too many matches found. Please enter a more specific query!",
+ 
+});}
+
 let debounce = require('lodash.debounce');
 
-function fetchCountries(searchCountries) {
-    return fetch(`https://restcountries.eu/rest/v2/name/${searchCountries}`).then(
-      (res) => {
-        return res.json();
-      }
-    );
-  }
+
+
 const refs = {
     input: document.querySelector(".search"),
     cardContainer:document.querySelector(".countries-card"),
-    cantrie:document.querySelector(".countries-search")
+    sampleСantries:document.querySelector(".countries-search"),
+    form:document.querySelector(".alert")
   };
-  refs.input.addEventListener(`input`,debounce(onSearch,500));
+refs.input.addEventListener(`input`,debounce(onSearch,500));
 
-  function onSearch(e) {
+function onSearch(e) {
     e.preventDefault();
-    const searchCountries = e.target.value;
-    fetchCountries(searchCountries).then(renderCard)};
+    const countries = e.target.value;
+    API.fetchCountries(countries)
+    .then(renderCard)
+    .finally(()=>countries.reset())};
   
 function renderCard(cantries){
-  console.log(cantries)
   const marcup = cantriesCardTempl(...cantries);
  if (cantries.length===1) {
   refs.cardContainer.innerHTML = marcup;
-  refs.cantrie.innerHTML = ``;
-  return
- }console.log(cantries);
- const marcups = cantriesSearch(cantries);
- console.log(marcups);
- refs.cantrie.innerHTML= marcups;
-
+  refs.sampleСantries.innerHTML = ``;
+  return;
+ } else if (cantries.length>=2 && cantries.length<=10) {
+  const sample = cantriesSearch(cantries);
+  refs.sampleСantries.innerHTML= sample;
+ }else{
+   prompt();
  
+  }
 
   } 
