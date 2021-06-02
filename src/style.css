@@ -10,7 +10,6 @@
   display: flex;
 }
 .alert{
-  border: 1px solid tomato;
   margin-top: 50px;
   margin-left: auto;
   width:360px;
