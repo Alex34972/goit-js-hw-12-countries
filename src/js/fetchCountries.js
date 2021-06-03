@@ -1,11 +1,6 @@
 import cantriesCardTempl from "../templates/cantries-card.hbs";
 import cantriesSearch from "../templates/search-cantries.hbs";
 
-
-import "@pnotify/core/dist/PNotify.css";
-import "@pnotify/core/dist/BrightTheme.css";
-import "@pnotify/confirm/dist/PNotifyConfirm.css";
-
 import API from './api-service';
 import getRefs from './get-refs';
 import promt from './alert';
@@ -16,10 +11,12 @@ refs.input.addEventListener(`input`,debounce(onSearch,500));
 
 function onSearch(e) {
     e.preventDefault();
-    const countries = e.target.value;
-    API.fetchCountries(countries)
-    .then(renderCard)
-    .catch(promt())
+    const countries = e.target.value.trim();
+    console.log(countries)
+    if (isNaN(countries) === true) {
+      API.fetchCountries(countries)
+      .then(renderCard)
+    }
     };
   
 function renderCard(cantries){
@@ -31,9 +28,8 @@ function renderCard(cantries){
  } else if (cantries.length>=2 && cantries.length<=10) {
   const sample = cantriesSearch(cantries);
   refs.sampleСantries.innerHTML= sample;
+  return;
  }else{
    promt();
  
-  }
-
-  } 
+  }} 
