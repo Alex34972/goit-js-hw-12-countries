@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "pnotify": "^5.2.0"
   },
   "devDependencies": {
     "@pnotify/confirm": "^5.2.0",
